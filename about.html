@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>À propos - Mon Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
+<style>
+/* --- Corrections pour que le bandeau soit entièrement visible --- */
+
+/* autoriser le scroll vertical et empêcher le débordement horizontal */
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: auto;
+}
+
+/* container : ne pas forcer la hauteur à 100vh (laisse la page grandir) */
+.container {
+  display: flex;
+  /* supprime min-height:100vh pour permettre à la page de s'étendre */
+  min-height: 0;
+  align-items: flex-start;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* main doit pouvoir s'étendre et autoriser le scroll vertical */
+main.main {
+  flex: 1;
+  padding: 2rem;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  min-height: auto;
+  /* s'assurer qu'il y a un espace en bas pour voir le bandeau */
+  padding-bottom: 6rem; /* <-- augmente si besoin */
+}
+
+/* garde le texte contraint et évite le débordement */
+.text-about, #skillsText {
+  font-family: 'Courier New', monospace;
+  font-size: 1.2rem;
+  color: limegreen;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  max-width: 90ch;
+  word-wrap: break-word;
+}
+
+/* skills title visible après la bio (déjà en JS) */
+#skillsTitle {
+  font-family: 'Courier New', monospace;
+  font-size: 1.6rem;
+  color: limegreen;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+/* tech-banner : reste en flow normal (pas fixed), visible et avec marge */
+.tech-banner {
+  width: calc(100% - 0px); /* toute la largeur du main */
+  overflow: hidden;
+  background: rgba(0, 255, 0, 0.05);
+  border-top: 1px solid rgba(0, 255, 0, 0.3);
+  border-bottom: 1px solid rgba(0, 255, 0, 0.3);
+  margin-top: 3rem;
+  padding: 1rem 0;
+  box-shadow: inset 0 0 10px rgba(0, 255, 0, 0.3);
+  position: relative;
+  opacity: 0;
+  transition: opacity 1s ease;
+  margin-bottom: 3rem; /* espace pour s'assurer qu'il n'est pas collé au bas */
+  box-sizing: border-box;
+}
+
+/* scroll-content : ne doit pas forcer le parent à déborder */
+.scroll-content {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  animation: scrollBanner 40s linear infinite;
+  width: max-content; /* reste en contenu large mais parent coupe proprement */
+  padding-left: 0;    /* on gère le décalage dans keyframes */
+}
+
+/* dimension des logos */
+.scroll-content img {
+  height: 60px;
+  filter: drop-shadow(0 0 6px limegreen);
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+/* animation : on part d'à droite (translateX(0) assume position naturelle) */
+@keyframes scrollBanner {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+</style>
+
+</head>
+<body>
+  <div class="matrix" id="matrix"></div>
+
+  <div class="container hidden" id="mainContent">
+    <nav class="sidebar">
+      <div class="profile">
+        <img src="187494332.png" alt="Photo de profil" />
+        <p class="name">Thibault<br><span class="lastname">DEVINEAU</span></p>
+      </div>
+      <div class="sidebar-buttons">
+        <button onclick="location.href='index.html'">🏠 Accueil</button>
+        <button onclick="location.href='projets.html'">🛠️ Projets</button>
+        <button onclick="location.href='cv.html'">📄 CV</button>
+        <button onclick="location.href='experiences.html'">💼 Expériences</button>
+        <button onclick="location.href='certifications.html'">🎓 Certifications</button>
+      </div>
+      <div class="icon-links">
+        <a class="github-button" href="https://github.com/thibaultD78" target="_blank" title="GitHub">
+          <img src="github.png" alt="GitHub" width="32" height="32" />
+        </a>
+        <a href="#" onclick="copyEmail()" title="Copier mon email">
+          <img src="gmail.png" alt="Gmail" width="32" height="32" />
+        </a>
+      </div>
+    </nav>
+
+    <main class="main">
+      <h1 id="typingTitle"></h1>
+      <p class="text-about" id="aboutText"></p>
+
+      <!-- Section compétences -->
+      <p class="text-competences" id="skillsTitle"><b>Compétences</b></p>
+      <p id="skillsText" class="text-about"></p>
+
+      <!-- 🔹 Bandeau défilant des compétences -->
+      <div class="tech-banner" id="techBanner">
+        <div class="scroll-content">
+          <img src="logoDev/HTML5.png" alt="HTML" />
+          <img src="logoDev/css.png" alt="CSS" />
+          <img src="logoDev/JavaScript.png" alt="JavaScript" />
+          <img src="logoDev/java.png" alt="Java" />
+          <img src="logoDev/symfony.png" alt="Symfony" />
+          <img src="logoDev/Angular.png" alt="Angular" />
+          <img src="logoDev/Sql.png" alt="SQL" />
+          <img src="github.png" alt="Git" />
+          <img src="logoDev/DOCKER.png" alt="Docker" />
+          <!-- ✅ Duplication -->
+          <img src="logoDev/HTML5.png" alt="HTML" />
+          <img src="logoDev/css.png" alt="CSS" />
+          <img src="logoDev/JavaScript.png" alt="JavaScript" />
+          <img src="logoDev/java.png" alt="Java" />
+          <img src="logoDev/symfony.png" alt="Symfony" />
+          <img src="logoDev/Angular.png" alt="Angular" />
+          <img src="logoDev/Sql.png" alt="SQL" />
+          <img src="github.png" alt="Git" />
+          <img src="logoDev/DOCKER.png" alt="Docker" />
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="scripts/matrix.js"></script>
+  <script>
+    const titleText = "À propos de moi";
+
+    const aboutContent = [
+      "Je m'appelle ", { glitch: true, word: "Thibault Devineau"}, ", j'ai 19 ans et je suis actuellement en ", { glitch: true, word:"BTS SIO"}, "(Services Informatiques aux Organisations), spécialité ", { glitch: true, word:"SLAM"}, "(Solutions Logicielles et Applications Métiers). Cette formation me prépare au développement d'",{ glitch: true, word:"applications"}, ", à la gestion de ",{ glitch: true, word:"bases de données"}," et à la maintenance de solutions ", { glitch: true, word:"logicielles"}," adaptées aux besoins des entreprises.",{ lineBreak: true },
+      "Titulaire d’un baccalauréat général avec mention ", { glitch: true, word: "assez bien"},", spécialités Mathématiques et Physique-Chimie, j’ai toujours été attiré par la logique, la résolution de problèmes et les outils techniques. ", { glitch: true, word: "Le développement"}, " est pour moi une passion que je cultive aussi bien dans le cadre ",{ glitch: true, word: "scolaire que personnel"},
+      { lineBreak: true },
+      "Je suis quelqu’un de ", { glitch: true, word: " motivé, autonome"},", avec un fort esprit d’initiative. J’aime apprendre, expérimenter et ", { glitch: true, word: "partager mes connaissances"},". En dehors des cours, je consacre du temps à des ", { glitch: true, word: "projets personnels"}, " afin de progresser constamment et d’élargir mes ", { glitch: true, word: "compétences"}
+    ];
+
+    const skillsContent = [
+      "J'ai pu acquérir de nombreuses compétences, notamment en ", { glitch: true, word:"HTML/CSS/JavaScript" }, 
+      " ainsi qu'en programmation orientée objet avec ", { glitch: true, word:"Java/JavaFX" }, 
+      " ou encore ", { glitch: true, word:"Symfony (PHP/Twig)" }, 
+      ". Je sais également utiliser un autre framework : ", { glitch: true, word:"Angular" }, 
+      " et je maîtrise le langage ", { glitch: true, word:"SQL" }, 
+      " pour la gestion des bases de données. J’ai aussi une bonne maîtrise des outils ", { glitch: true, word:"Git" }, 
+      ", de l’utilisation de ", { glitch: true, word:"Docker" }, 
+      " et des méthodologies de travail ", { glitch: true, word:"Agile" }
+    ];
+
+    function typeTitle(text, elementId, delay = 75, callback = null) {
+      const el = document.getElementById(elementId);
+      let i = 0;
+      el.textContent = "";
+      el.classList.add("blinking-cursor");
+      function typeChar() {
+        if (i < text.length) {
+          el.textContent += text.charAt(i);
+          i++;
+          setTimeout(typeChar, delay);
+        } else {
+          el.classList.remove("blinking-cursor");
+          if (callback) callback();
+        }
+      }
+      typeChar();
+    }
+
+    function displayText(content, containerId, callback = null) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = "";
+      let i = 0;
+
+      function typeNext() {
+        if (i >= content.length) {
+          if (callback) callback();
+          return;
+        }
+        const item = content[i];
+        if (typeof item === "string") {
+          container.appendChild(document.createTextNode(item));
+        } else if (item.glitch) {
+          const span = document.createElement("span");
+          span.textContent = item.word;
+          span.classList.add("glitch");
+          span.setAttribute("data-text", item.word);
+          container.appendChild(span);
+        } else if (item.lineBreak) {
+          container.appendChild(document.createElement("br"));
+          container.appendChild(document.createElement("br"));
+        }
+        i++;
+        setTimeout(typeNext, 25);
+      }
+
+      typeNext();
+    }
+
+    function randomGlitchEffect() {
+      const glitchWords = document.querySelectorAll('.glitch');
+      glitchWords.forEach(span => {
+        if (Math.random() < 0.2) {
+          span.classList.add('glitch-active');
+          setTimeout(() => span.classList.remove('glitch-active'), 600);
+        }
+      });
+    }
+
+    setInterval(randomGlitchEffect, 1500);
+
+    // Lancement après animation Matrix
+    setTimeout(() => {
+      typeTitle(titleText, "typingTitle", 75, () => {
+        displayText(aboutContent, "aboutText", () => {
+          const skillsTitle = document.getElementById("skillsTitle");
+          skillsTitle.style.opacity = 1;
+          setTimeout(() => {
+            displayText(skillsContent, "skillsText", () => {
+              // 🔥 Une fois tout affiché, le bandeau apparaît
+              document.getElementById("techBanner").style.opacity = 1;
+            });
+          }, 500);
+        });
+      });
+    }, 2200);
+
+    launchMatrixAnimation(() => {
+      document.getElementById('mainContent').classList.remove('hidden');
+    });
+
+    function copyEmail() {
+      const email = "thib.devineau@gmail.com";
+      navigator.clipboard.writeText(email)
+        .then(() => alert("Adresse email copiée !"))
+        .catch(() => alert("Erreur de copie."));
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Mon CV - Mon Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="matrix" id="matrix"></div>
+
+<div class="container hidden" id="mainContent">
+    <nav class="sidebar">
+      <div class="profile">
+        <img src="187494332.png" alt="Photo de profil" />
+        <p class="name">Thibault<br><span class="lastname">DEVINEAU</span></p>
+      </div>
+      <div class="sidebar-buttons">
+        <button onclick="location.href='index.html'">🏠 Accueil</button>
+        <button onclick="location.href='about.html'">👤 À propos</button>
+        <button onclick="location.href='projets.html'">🛠️ Projets</button>
+        <button onclick="location.href='experiences.html'">💼 Expériences</button>
+        <button onclick="location.href='certifications.html'">🎓 Certifications</button>
+      </div>
+      <div class="icon-links">
+        <a class="github-button" href="https://github.com/thibaultD78" target="_blank" title="GitHub">
+          <img src="github.png" alt="GitHub" width="32" height="32" />
+        </a>
+        <a href="#" onclick="copyEmail()" title="Copier mon email">
+          <img src="gmail.png" alt="Gmail" width="32" height="32" />
+        </a>
+      </div>
+    </nav>
+
+
+    <main class="main">
+      <h1 id="typingTitle"></h1>
+      <br>
+      <p>Ici vous trouverez mon cv ainsi qu'une lettre de motivation type :</p>
+      <br>
+      <br>
+      <div class="file-container">
+      <div class="file-box">
+        <div class="file-top">
+            <img src="cvimage.png" alt="Aperçu du fichier" class="download-image" />
+        </div>
+        <div class="file-bottom">
+            <span class="file-name">CV - Thibault Devineau</span>
+            <a href="CVactualiséThibaultDEVINEAU.pdf" download title="Télécharger">
+            <img src="download.png" alt="Télécharger" class="download-icon" />
+            </a>
+        </div>
+      </div>
+      <div class="file-box">
+        <div class="file-top">
+            <img src="lettreMotiv.png" alt="Aperçu du fichier" class="download-image" />
+        </div>
+        <div class="file-bottom">
+            <span class="file-name">Lettre de motivation - Thibault Devineau</span>
+            <a href="lettreDeMotivationThibaultDEVINEAU.pdf" download title="Télécharger">
+            <img src="download.png" alt="Télécharger" class="download-icon" />
+            </a>
+        </div>
+      </div>
+    </div>
+    </main>
+  </div>
+
+  <script src="scripts/matrix.js"></script>
+  <script>
+    launchMatrixAnimation(() => {
+      document.getElementById('mainContent').classList.remove('hidden');
+    });
+
+    function copyEmail() {
+        const email = "thib.devineau@gmail.com";
+        navigator.clipboard.writeText(email).then(() => {
+        alert("Adresse email copiée !");
+        }).catch(() => {
+        alert("Erreur de copie.");
+        });
+    }
+    const titleText = "Mon CV";
+    function typeTitle(text, elementId, delay = 75, callback = null) {
+        const el = document.getElementById(elementId);
+        let i = 0;
+        el.textContent = "";
+        el.classList.add("blinking-cursor");
+        function typeChar() {
+        if (i < text.length) {
+            el.textContent += text.charAt(i);
+            i++;
+            setTimeout(typeChar, delay);
+        } else {
+            el.classList.remove("blinking-cursor");
+            if (callback) callback();
+        }
+        }
+        typeChar();
+    }
+    setTimeout(() => {
+        typeTitle(titleText, "typingTitle", 75, () => {
+        displayAboutText(aboutContent, "aboutText");
+        });
+    }, 2200);
+  </script>
+</body>
+</html>

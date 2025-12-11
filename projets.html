@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Mes projets - Mon Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="matrix" id="matrix"></div>
+
+<div class="container hidden" id="mainContent">
+    <nav class="sidebar">
+      <div class="profile">
+        <img src="187494332.png" alt="Photo de profil" />
+        <p class="name">Thibault<br><span class="lastname">DEVINEAU</span></p>
+      </div>
+      <div class="sidebar-buttons">
+        <button onclick="location.href='index.html'">🏠 Accueil</button>
+        <button onclick="location.href='about.html'">👤 À propos</button>
+        <button onclick="location.href='cv.html'">📄 CV</button>
+        <button onclick="location.href='experiences.html'">💼 Expériences</button>
+        <button onclick="location.href='certifications.html'">🎓 Certifications</button>
+      </div>
+      <div class="icon-links">
+        <a class="github-button" href="https://github.com/thibaultD78" target="_blank" title="GitHub">
+          <img src="github.png" alt="GitHub" width="32" height="32" />
+        </a>
+        <a href="#" onclick="copyEmail()" title="Copier mon email">
+          <img src="gmail.png" alt="Gmail" width="32" height="32" />
+        </a>
+      </div>
+    </nav>
+
+
+
+    <main class="main">
+        <title>Mes Projets</title>
+        <h1 id="typingTitle"></h1>
+        <br>
+        <p>Ici vous pourrez trouver mes principaux projets triés par langages :</p>
+        <br>
+        <h3 class="glitch2" data-text="HTML,CSS,JavaScript :">HTML,CSS,JavaScript :</h3>
+        <br>
+        <div class="file-container">
+            <div class="file-box">
+                <div class="file-top">
+                    <img src="Capture d'écran 2025-07-01 173322.png" alt="Aperçu du fichier" class="download-image" />
+                </div>
+                <div class="file-bottom">
+                    <span class="file-name">Premier site web</span>
+                    <a href="https://github.com/thibaultD78/thibaultD78.github.io" download title="Télécharger">
+                    <img src="download.png" alt="Télécharger" class="download-icon" />
+                    </a>
+                </div>
+            </div>
+            <div class="file-box">
+                <div class="file-top">
+                    <img src="Capture d'écran 2025-07-01 162917.png" alt="Aperçu du fichier" class="download-image" />
+                </div>
+                <div class="file-bottom">
+                    <span class="file-name">FlightArea</span>
+                    <a href="https://github.com/thibaultD78/FlightArea" download title="Télécharger">
+                    <img src="download.png" alt="Télécharger" class="download-icon" />
+                    </a>
+                </div>
+            </div>
+        </div>
+        <br>
+        <h3 class="glitch2" data-text="JAVA,JAVAFX :">JAVA,JAVAFX :</h3>
+        <br>
+        <div class="file-container">
+            <div class="file-box">
+                <div class="file-top">
+                    <img src="poke.png" alt="Aperçu du fichier" class="download-image" />
+                </div>
+                <div class="file-bottom">
+                    <span class="file-name">PokeBattle</span>
+                    <a href="https://github.com/thibaultD78/finalPokeBattle" download title="Télécharger">
+                    <img src="download.png" alt="Télécharger" class="download-icon" />
+                    </a>
+                </div>
+            </div>
+            <div class="file-box">
+                <div class="file-top">
+                    <img src="" alt="Aperçu du fichier" class="download-image" />
+                </div>
+                <div class="file-bottom">
+                    <span class="file-name">IMMOSYNC</span>
+                    <a href="https://github.com/thibaultD78/IMMOSYNCproject" download title="Télécharger">
+                    <img src="download.png" alt="Télécharger" class="download-icon" />
+                    </a>
+                </div>
+            </div>
+        </div>
+        <br>
+        <h3 class="glitch2" data-text="WordPress :">WordPress :</h3>
+        <br>
+        <div class="file-container">
+            <div class="file-box">
+                <div class="file-top">
+                    <img src="donuts.png" alt="Aperçu du fichier" class="download-image" />
+                </div>
+                <div class="file-bottom">
+                    <span class="file-name">Site c'est mon donuts</span>
+                    <a href="https://sio2026-wp-tdab.sio1-2lerebours.org/wordpress" download title="Télécharger">
+                    <img src="go.png" alt="Télécharger" class="download-icon" />
+                    </a>
+                </div>
+            </div>
+        </div>
+        <br>
+        <h3 class="glitch2" data-text="Symfony :">Symfony :</h3>
+        <br>
+        <div class="file-container">
+            <div class="file-box">
+                <div class="file-top">
+                    <img src="" alt="Aperçu du fichier" class="download-image" />
+                </div>
+                <div class="file-bottom">
+                    <span class="file-name">IMMOSYNC</span>
+                    <a href="" download title="Télécharger">
+                    <img src="download.png" alt="Télécharger" class="download-icon" />
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+  </div>
+
+  <script src="scripts/matrix.js"></script>
+  <script>
+    const titleText = "Mes projets";
+    function typeTitle(text, elementId, delay = 75, callback = null) {
+        const el = document.getElementById(elementId);
+        let i = 0;
+        el.textContent = "";
+        el.classList.add("blinking-cursor");
+        function typeChar() {
+        if (i < text.length) {
+            el.textContent += text.charAt(i);
+            i++;
+            setTimeout(typeChar, delay);
+        } else {
+            el.classList.remove("blinking-cursor");
+            if (callback) callback();
+        }
+        }
+        typeChar();
+    }
+    launchMatrixAnimation(() => {
+      document.getElementById('mainContent').classList.remove('hidden');
+    });
+
+        function copyEmail() {
+        const email = "thib.devineau@gmail.com";
+        navigator.clipboard.writeText(email).then(() => {
+        alert("Adresse email copiée !");
+        }).catch(() => {
+        alert("Erreur de copie.");
+        });
+    }
+    setTimeout(() => {
+        typeTitle(titleText, "typingTitle", 75, () => {
+        displayAboutText(aboutContent, "aboutText");
+        });
+    }, 2200);
+  </script>
+</body>
+</html>

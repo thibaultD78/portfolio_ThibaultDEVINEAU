@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio - Accueil</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- ANIMATION MATRIX -->
+  <div class="matrix" id="matrix"></div>
+
+  <!-- CONTENU PRINCIPAL -->
+<div class="container hidden" id="mainContent">
+    <nav class="sidebar">
+      <div class="profile">
+        <img src="187494332.png" alt="Photo de profil" />
+        <p class="name">Thibault<br><span class="lastname">DEVINEAU</span></p>
+      </div>
+      <div class="sidebar-buttons">
+        <button onclick="location.href='projets.html'">🛠️ Projets</button>
+        <button onclick="location.href='about.html'">👤 À propos</button>
+        <button onclick="location.href='cv.html'">📄 CV</button>
+        <button onclick="location.href='experiences.html'">💼 Expériences</button>
+        <button onclick="location.href='certifications.html'">🎓 Certifications</button>
+      </div>
+      <div class="icon-links">
+        <a class="github-button" href="https://github.com/thibaultD78" target="_blank" title="GitHub">
+          <img src="github.png" alt="GitHub" width="32" height="32" />
+        </a>
+        <a href="#" onclick="copyEmail()" title="Copier mon email">
+          <img src="gmail.png" alt="Gmail" width="32" height="32" />
+        </a>
+      </div>
+    </nav>
+
+
+    <!-- TERMINAL + TITRE -->
+    <main class="main">
+      <h1 class="typing-title" id="typingTitle"></h1>
+
+      <div class="terminal" id="terminal">
+        <div id="terminalOutput"></div>
+        <form id="terminalForm">
+          <span>root@portfolio:~$</span>
+          <input type="text" id="terminalInput" autocomplete="off" autofocus />
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <!-- SCRIPTS -->
+<script src="scripts/matrix.js"></script>
+<script>
+  const terminalOutput = document.getElementById("terminalOutput");
+  const terminalForm = document.getElementById("terminalForm");
+  const terminalInput = document.getElementById("terminalInput");
+
+  let loadingInterval = null;
+
+  // Lancement matrix + intro
+  launchMatrixAnimation(() => {
+    document.getElementById('mainContent').classList.remove('hidden');
+    typeTitle("Bienvenue sur mon portfolio_", "typingTitle");
+
+    const introLines = [
+      "Bienvenue sur le terminal !",
+      "Vous pouvez naviguer dans le portfolio en tapant une commande.",
+      "Tapez 'help' pour voir les pages disponibles.",
+      "Ou utilisez la barre latérale à gauche."
+    ];
+
+    setTimeout(() => {
+      typeLines(introLines, 30, 600, () => {
+        showPrompt();
+      });
+    }, 600);
+  });
+
+  // Titre principal avec effet de dactylographie
+  function typeTitle(text, elementId, delay = 75) {
+    const el = document.getElementById(elementId);
+    let i = 0;
+    el.textContent = "";
+    el.classList.add("blinking-cursor");
+
+    function typeChar() {
+      if (i < text.length) {
+        el.textContent += text.charAt(i);
+        i++;
+        setTimeout(typeChar, delay);
+      } else {
+        el.classList.remove("blinking-cursor");
+      }
+    }
+
+    typeChar();
+  }
+
+  // Affiche une liste de lignes typées une par une
+  function typeLines(lines, delay = 30, linePause = 600, callback = null) {
+    let currentLine = 0;
+
+    function typeNextLine() {
+      if (currentLine >= lines.length) {
+        appendLine("\u00A0"); // saut de ligne
+        if (callback) callback();
+        return;
+      }
+
+      const text = lines[currentLine];
+      let i = 0;
+      let typed = "";
+
+      appendLine("\u00A0");
+      const lineElement = terminalOutput.lastChild;
+
+      function typeChar() {
+        if (i < text.length) {
+          typed += text.charAt(i);
+          lineElement.textContent = typed;
+          i++;
+          setTimeout(typeChar, delay);
+        } else {
+          currentLine++;
+          setTimeout(typeNextLine, linePause);
+        }
+      }
+
+      typeChar();
+    }
+
+    typeNextLine();
+  }
+
+  // Ajoute une ligne au terminal
+  function appendLine(text = "") {
+    const line = document.createElement("div");
+    line.textContent = text;
+    terminalOutput.appendChild(line);
+    terminalOutput.scrollTop = terminalOutput.scrollHeight;
+    return line;
+  }
+
+  // Montre le prompt (réaffiche le formulaire)
+  function showPrompt() {
+    terminalForm.style.display = "flex";
+  }
+
+  // Cache le prompt
+  function hidePrompt() {
+    terminalForm.style.display = "none";
+  }
+
+  // Gestion des commandes
+  function runCommand(command) {
+    if (!command) return;
+
+    appendLine(`root@portfolio:~$ ${command}`);
+    hidePrompt();
+
+    const routes = {
+      cv: "cv.html",
+      about: "about.html",
+      projets: "projets.html",
+      experiences: "experiences.html",
+      certif:"certifications.html",
+    };
+
+    if (command === "contact") {
+      appendLine("GitHub : https://github.com/thibaultD78");
+      appendLine("Email : thib.devineau@gmail.com");
+      appendLine("\u00A0");
+      showPrompt();
+    } else if (routes[command]) {
+      const loadingLine = startLoadingAnimation();
+      appendLine("\u00A0"); // saut de ligne
+
+      setTimeout(() => {
+        stopLoadingAnimation();
+        loadingLine.remove();
+        window.location.href = routes[command];
+      }, 3000);
+
+    } else if (command === "help") {
+      appendLine("Commandes disponibles : help, contact, " + Object.keys(routes).join(", "));
+      appendLine("\u00A0"); // saut de ligne
+      showPrompt();
+    } else {
+      appendLine(`Commande inconnue : "${command}". Tape 'help' pour la liste.`);
+      appendLine("\u00A0"); // saut de ligne
+      showPrompt();
+    }
+  }
+
+  // Animation "Chargement..." avec points qui apparaissent
+  function startLoadingAnimation() {
+    let dots = 0;
+    const line = appendLine("Chargement");
+
+    loadingInterval = setInterval(() => {
+      dots = (dots + 1) % 4;
+      line.textContent = "Chargement" + ".".repeat(dots);
+    }, 350);
+
+    return line;
+  }
+
+  function stopLoadingAnimation() {
+    if (loadingInterval) {
+      clearInterval(loadingInterval);
+      loadingInterval = null;
+    }
+  }
+
+  // Form submit
+  terminalForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const command = terminalInput.value.trim();
+    runCommand(command);
+    terminalInput.value = "";
+  });
+
+  function copyEmail() {
+    const email = "thib.devineau@gmail.com"; // ← Remplace par ton adresse
+    navigator.clipboard.writeText(email).then(() => {
+      alert("Adresse mail copiée dans le presse-papiers !");
+    }).catch(() => {
+      alert("Échec de la copie de l'email. l'adresse ( thib.devineau@gmail.com )");
+    });
+  }
+</script>
+
+</body>
+</html>
