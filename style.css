@@ -540,6 +540,30 @@ a {
     transform: translateX(-50%);
   }
 }
+.certif-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  background-color: #1a1a1a;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  color: #fff;
+  
+}
+
+.certif-box p {
+  flex: 1;
+  text-align: left;
+}
+
+.certif-img {
+  width: 90px;
+  height: auto;
+  border-radius: 8px;
+}
+
 
 
 
