@@ -563,7 +563,14 @@ a {
   height: auto;
   border-radius: 8px;
 }
+.certif-link {
+    text-decoration: none; /* Enlève le soulignement du lien */
+    color: inherit;       /* Garde la couleur de ton texte actuel */
+    display: block;       /* Permet de cliquer sur toute la zone */
+    cursor: pointer;
+}
 
-
-
-
+.certif-box:hover {
+    transform: scale(1.05); /* Petit effet sympa au survol */
+    transition: transform 0.3s ease;
+}
