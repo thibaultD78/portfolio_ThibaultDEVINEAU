@@ -574,3 +574,12 @@ a {
     transform: scale(1.05); /* Petit effet sympa au survol */
     transition: transform 0.3s ease;
 }
+#matrix {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: black;
+  z-index: 9999;
+}
